@@ -1,12 +1,14 @@
 <template>
 	<view class="uni-numbox">
 		<view @click="_calcValue('minus')" class="uni-numbox__minus uni-numbox-btns" :style="{background}">
-			<text class="uni-numbox--text" :class="{ 'uni-numbox--disabled': inputValue <= min || disabled }" :style="{color}">-</text>
+			<text class="uni-numbox--text" :class="{ 'uni-numbox--disabled': inputValue <= min || disabled }"
+				:style="{color}">-</text>
 		</view>
 		<input :disabled="disabled" @focus="_onFocus" @blur="_onBlur" class="uni-numbox__value" type="number"
 			v-model="inputValue" :style="{background, color}" />
 		<view @click="_calcValue('plus')" class="uni-numbox__plus uni-numbox-btns" :style="{background}">
-			<text class="uni-numbox--text" :class="{ 'uni-numbox--disabled': inputValue >= max || disabled }" :style="{color}">+</text>
+			<text class="uni-numbox--text" :class="{ 'uni-numbox--disabled': inputValue >= max || disabled }"
+				:style="{color}">+</text>
 		</view>
 	</view>
 </template>
@@ -131,9 +133,14 @@
 			},
 			_onBlur(event) {
 				this.$emit('blur', event)
-				let value = event.detail.value;
+				// 官方的代码没有进行数值转换，用户输入的 value 值可能是非法字符：
+				// let value = event.detail.value;
+
+				// 将用户输入的内容转化为整数
+				let value = parseInt(event.detail.value);
 				if (!value) {
-					// this.inputValue = 0;
+					// 如果转化之后的结果为 NaN，则给定默认值为 1
+					this.inputValue = 1;
 					return;
 				}
 				value = +value;

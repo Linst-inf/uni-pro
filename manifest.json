@@ -51,11 +51,15 @@
     /* 小程序特有相关 */
     "mp-weixin" : {
         "appid" : "wx62f77dd2446c2037",
+
         "setting" : {
             "urlCheck" : true,
             "es6" : true
         },
-        "usingComponents" : true
+        "usingComponents" : true,
+		"requiredPrivateInfos": [
+		    "chooseAddress"
+		 ]
     },
     "mp-alipay" : {
         "usingComponents" : true
